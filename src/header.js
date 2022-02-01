@@ -1,7 +1,7 @@
-function Header() {
+function Header({ location }) {
 	return (
-		<div id='ForecastContainer'>
-			<h1 id='forecast-header'>7-Day Forecast for Phoenix Arizona</h1>
+		<div className='mainHeader'>
+			<h1 id='forecast-header'>7-Day Forecast for {location}</h1>
 		</div>
 	);
 }
