@@ -5,12 +5,12 @@ import dataLocations from "./weatherLocations";
 
 function DropdownOption({ handleSelect, location }) {
 	return (
-		<div className='App container'>
+		<div>
 			<DropdownButton
 				id='dropdown-button-dark-example2'
 				variant='secondary'
 				menuVariant='dark'
-				title={dataLocations[location][1]}
+				title={dataLocations[location].city}
 				className='mt-2'
 				onSelect={handleSelect}>
 				<Dropdown.Item eventKey='Phoenix'>Phoenix</Dropdown.Item>

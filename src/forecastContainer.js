@@ -8,7 +8,7 @@ function ForecastContainer({ location }) {
 	useEffect(() => {
 		fetch(
 			"https://api.openweathermap.org/data/2.5/onecall?" +
-				dataLocations[location][0] +
+				dataLocations[location].quordinates +
 				"&units=imperial&exclude=hourly,minutely,alerts&appid=88b895fa4815bc85c2b6ee08540fbf86"
 		)
 			.then((response) => response.json())
