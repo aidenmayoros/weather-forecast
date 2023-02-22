@@ -1,25 +1,7 @@
-import { useState, useEffect } from "react";
-import Forecast from "./forecast";
-import dataLocations from "./weatherLocations";
+import Forecast from './forecast';
 
-function ForecastContainer({ location }) {
-	const [weatherData, setWeatherData] = useState({});
-
-	useEffect(() => {
-		fetch(
-			"https://api.openweathermap.org/data/2.5/onecall?" +
-				dataLocations[location].quordinates +
-				"&units=imperial&exclude=hourly,minutely,alerts&appid=88b895fa4815bc85c2b6ee08540fbf86"
-		)
-			.then((response) => response.json())
-			.then((data) => setWeatherData(data));
-	}, [location]);
-
-	if (!weatherData.daily) {
-		return <div>Loading Data</div>;
-	}
-
-	return (
+function ForecastContainer({ weatherData }) {
+	return weatherData ? (
 		<ul className='weatherForecast'>
 			{weatherData.daily
 				.filter((_, i) => i < 7)
@@ -27,6 +9,8 @@ function ForecastContainer({ location }) {
 					return <Forecast day={data} key={data.dt} />;
 				})}
 		</ul>
+	) : (
+		<div>Loading Data</div>
 	);
 }
 

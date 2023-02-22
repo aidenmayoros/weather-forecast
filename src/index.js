@@ -1,23 +1,32 @@
-import ReactDOM from "react-dom";
-import "./index.css";
-import Header from "./header";
-import ForecastContainer from "./forecastContainer";
-import Dropdown from "./dropdown";
-import { useState } from "react";
+import ReactDOM from 'react-dom';
+import './index.css';
+import Header from './header';
+import ForecastContainer from './forecastContainer';
+import InputWithButtonOnRight from './inputRightButton';
+import { useState, useEffect } from 'react';
+import { handleLocationChange, geoCode } from './handleLocationChange';
 
 function App() {
-	const [value, setValue] = useState("Phoenix");
-	const handleSelect = (e) => {
-		setValue(e);
+	const [city, setCity] = useState('Phoenix');
+	const [weatherData, setWeatherData] = useState();
+
+	useEffect(() => {
+		handleLocationChange(city).then((data) => setWeatherData(data));
+	}, []);
+
+	const updateCityData = async (newcity) => {
+		let newData = await handleLocationChange(newcity).then((data) => data);
+		await geoCode(newcity).then((data) => setCity(data.formattedAddress));
+		setWeatherData(newData);
 	};
 
 	return (
 		<div id='ForecastContainer'>
-			<Header location={value} />
-			<Dropdown handleSelect={handleSelect} location={value} />
-			<ForecastContainer location={value} />
+			<Header location={city} />
+			<InputWithButtonOnRight updateCityData={updateCityData} />
+			<ForecastContainer weatherData={weatherData} />
 		</div>
 	);
 }
 
-ReactDOM.render(<App />, document.getElementById("root"));
+ReactDOM.render(<App />, document.getElementById('root'));
